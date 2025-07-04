@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EvenBridge - Eventos e Ingressos</title>
+    <meta name="description" content="A melhor plataforma de eventos e venda de ingressos do Brasil">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Adicionar estas meta tags para melhor performance de scroll -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+    /* CSS crítico para evitar flash */
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+</style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <p>Carregando eventos incríveis...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>EvenBridge</h1>
+                    <span class="tagline">Conectando você aos melhores eventos</span>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#home" class="nav-link active">Início</a></li>
+                        <li><a href="#eventos" class="nav-link">Eventos</a></li>
+                        <li><a href="#meus-tickets" class="nav-link">Meus Tickets</a></li>
+                        <li><a href="#organizadores" class="nav-link">Para Organizadores</a></li>
+                        <li><a href="#contato" class="nav-link">Contato</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="login-btn">Login</button>
+                    <button class="btn btn-primary" id="cadastro-btn">Cadastrar</button>
+                    <button class="mobile-menu-toggle" id="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Descubra os Melhores Eventos</h2>
+                <p class="hero-subtitle">Festas, shows, baladas e experiências únicas. Tudo em um só lugar.</p>
+                <div class="hero-search">
+                    <div class="search-container">
+                        <input type="text" id="search-events" placeholder="Buscar eventos, artistas ou locais...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="filters-quick">
+                        <button class="filter-btn active" data-filter="todos">Todos</button>
+                        <button class="filter-btn" data-filter="festa">Festas</button>
+                        <button class="filter-btn" data-filter="show">Shows</button>
+                        <button class="filter-btn" data-filter="balada">Baladas</button>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" data-target="50000">0</span>
+                        <span class="stat-label">Ingressos Vendidos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="500">0</span>
+                        <span class="stat-label">Eventos Realizados</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="98">0</span>
+                        <span class="stat-label">% Satisfação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eventos em Destaque -->
+    <section id="eventos" class="eventos-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Eventos em Destaque</h2>
+                <p class="section-subtitle">Os eventos mais aguardados da temporada</p>
+            </div>
+            
+            <!-- Filtros Avançados -->
+            <div class="filters-advanced">
+                <div class="filter-group">
+                    <select id="filter-cidade" class="filter-select">
+                        <option value="">Todas as cidades</option>
+                        <option value="sao-paulo">São Paulo</option>
+                        <option value="rio-janeiro">Rio de Janeiro</option>
+                        <option value="belo-horizonte">Belo Horizonte</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="filter-data" class="filter-select">
+                        <option value="">Todas as datas</option>
+                        <option value="hoje">Hoje</option>
+                        <option value="semana">Esta semana</option>
+                        <option value="mes">Este mês</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="filter-preco" class="filter-select">
+                        <option value="">Todos os preços</option>
+                        <option value="gratis">Gratuito</option>
+                        <option value="0-50">Até R$ 50</option>
+                        <option value="50-100">R$ 50 - R$ 100</option>
+                        <option value="100+">Acima de R$ 100</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid de Eventos -->
+            <div class="eventos-grid" id="eventos-grid">
+                <!-- Os eventos serão carregados via JavaScript -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="load-more">Carregar Mais Eventos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Detalhes do Evento -->
+    <div id="evento-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-body">
+                <!-- Conteúdo carregado dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Meus Tickets -->
+    <section id="meus-tickets" class="tickets-section">
+        <div class="container">
+            <h2 class="section-title">Meus Tickets</h2>
+            <div class="tickets-container" id="tickets-container">
+                <div class="empty-state">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h3>Nenhum ticket encontrado</h3>
+                    <p>Compre seu primeiro ingresso e viva experiências incríveis!</p>
+                    <button class="btn btn-primary" onclick="scrollToSection('eventos')">Explorar Eventos</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Para Organizadores -->
+    <section id="organizadores" class="organizadores-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Para Organizadores de Eventos</h2>
+                <p class="section-subtitle">Plataforma completa para divulgar e vender ingressos</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics Avançado</h3>
+                    <p>Acompanhe vendas, público-alvo e performance em tempo real</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>App Mobile</h3>
+                    <p>Gerencie seus eventos de qualquer lugar com nosso app</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>Check-in Digital</h3>
+                    <p>Sistema de QR Code para entrada rápida e segura</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Pagamentos Seguros</h3>
+                    <p>Múltiplas formas de pagamento com segurança máxima</p>
+                </div>
+            </div>
+            <div class="cta-section">
+                <button class="btn btn-primary btn-large" id="criar-evento-btn">Criar Meu Primeiro Evento</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="contato-section">
+        <div class="container">
+            <div class="contato-grid">
+                <div class="contato-info">
+                    <h2>Fale Conosco</h2>
+                    <p>Estamos aqui para ajudar você a encontrar ou criar o evento perfeito</p>
+                    <div class="contato-items">
+                        <div class="contato-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>contato@evenbridge.com.br</span>
+                        </div>
+                        <div class="contato-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(11) 9999-9999</span>
+                        </div>
+                        <div class="contato-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp: (11) 9999-9999</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="contato-form" id="contato-form">
+                    <div class="form-group">
+                        <input type="text" id="nome" required>
+                        <label for="nome">Seu Nome</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" required>
+                        <label for="email">Seu E-mail</label>
+                    </div>
+                    <div class="form-group">
+                        <select id="assunto" required>
+                            <option value="">Selecione o assunto</option>
+                            <option value="duvida">Dúvida sobre evento</option>
+                            <option value="organizador">Quero ser organizador</option>
+                            <option value="suporte">Suporte técnico</option>
+                            <option value="parceria">Parceria comercial</option>
+                        </select>
+                        <label for="assunto">Assunto</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="mensagem" required></textarea>
+                        <label for="mensagem">Sua Mensagem</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EvenBridge</h3>
+                    <p>A plataforma que conecta você aos melhores eventos do Brasil</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Para Usuários</h4>
+                    <ul>
+                        <li><a href="#">Como comprar</a></li>
+                        <li><a href="#">Meus ingressos</a></li>
+                        <li><a href="#">Política de cancelamento</a></li>
+                        <li><a href="#">Suporte</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Para Organizadores</h4>
+                    <ul>
+                        <li><a href="#">Criar evento</a></li>
+                        <li><a href="#">Preços</a></li>
+                        <li><a href="#">API e integrações</a></li>
+                        <li><a href="#">Central de ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de uso</a></li>
+                        <li><a href="#">Política de privacidade</a></li>
+                        <li><a href="#">LGPD</a></li>
+                        <li><a href="#">Sobre nós</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EvenBridge. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para conectar pessoas a experiências únicas</p>
+            </div>
+        </div>
+        <!-- Adicionar ao footer ou seção de ajuda -->
+<div class="keyboard-shortcuts" style="display: none; position: fixed; bottom: 20px; left: 20px; background: var(--gray-900); color: white; padding: 1rem; border-radius: 8px; z-index: 3000;">
+    <h4>Atalhos de Teclado</h4>
+    <p><kbd>Ctrl</kbd> + <kbd>↓</kbd> Próxima seção</p>
+    <p><kbd>Ctrl</kbd> + <kbd>↑</kbd> Seção anterior</p>
+    <p><kbd>Ctrl</kbd> + <kbd>Home</kbd> Início</p>
+    <p><kbd>Ctrl</kbd> + <kbd>End</kbd> Final</p>
+</div>
+
+<script>
+// Mostrar/ocultar atalhos com Ctrl+?
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === '/') {
+        e.preventDefault();
+        const shortcuts = document.querySelector('.keyboard-shortcuts');
+        shortcuts.style.display = shortcuts.style.display === 'none' ? 'block' : 'none';
+    }
+});
+</script>
+
+    </footer>
+
+    <!-- Notificação Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <span id="toast-message"></span>
+            <button class="toast-close">&times;</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <!-- Notification Container será criado dinamicamente -->
+
+<!-- Melhorias no Loading Screen existente -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Melhorar o loading screen inicial
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        const loaderText = loadingScreen.querySelector('.loader p');
+        if (loaderText) {
+            const messages = [
+                'Carregando eventos incríveis...',
+                'Preparando a melhor experiência...',
+                'Quase pronto para a diversão...'
+            ];
+            
+            let messageIndex = 0;
+            const messageInterval = setInterval(() => {
+                messageIndex = (messageIndex + 1) % messages.length;
+                loaderText.textContent = messages[messageIndex];
+            }, 1000);
+            
+            // Parar rotação de mensagens quando loading terminar
+            setTimeout(() => {
+                clearInterval(messageInterval);
+            }, 2000);
+        }
+    }
+});
+</script>
+
+<!-- Preload de fontes para melhor performance -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
+
+</body>
+</html>

@@ -27,31 +27,32 @@
 
     <!-- Header -->
     <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <h1>EvenBridge</h1>
-                    <span class="tagline">Conectando você aos melhores eventos</span>
-                </div>
-                <nav class="nav">
-                    <ul class="nav-list">
-                        <li><a href="#home" class="nav-link active">Início</a></li>
-                        <li><a href="#eventos" class="nav-link">Eventos</a></li>
-                        <li><a href="#meus-tickets" class="nav-link">Meus Tickets</a></li>
-                        <li><a href="#organizadores" class="nav-link">Para Organizadores</a></li>
-                        <li><a href="#contato" class="nav-link">Contato</a></li>
-                    </ul>
-                </nav>
-                <div class="header-actions">
-                    <button class="btn btn-outline" id="login-btn">Login</button>
-                    <button class="btn btn-primary" id="cadastro-btn">Cadastrar</button>
-                    <button class="mobile-menu-toggle" id="mobile-menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <h1>EventBridge</h1>
+                <span class="tagline">Conectando você aos melhores eventos</span>
+            </div>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#inicio" class="nav-link">Início</a></li>
+                    <li><a href="#eventos" class="nav-link">Eventos</a></li>
+                    <li><a href="#organizadores" class="nav-link">Organizadores</a></li>
+                    <li><a href="#contato" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                 <button class="btn btn-outline cart-btn" onclick="cartSystem.showCart()" style="display: none;">
+                    🛒 Carrinho
+                    <span class="cart-counter">0</span>
+                </button>
+                <a href="#" class="btn btn-outline auth-trigger">Cadastre-se ou faça seu Login!</a>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -339,10 +340,6 @@ document.addEventListener('keydown', (e) => {
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/app.js"></script>
-    <!-- Notification Container será criado dinamicamente -->
-
 <!-- Melhorias no Loading Screen existente -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -369,11 +366,41 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 2000);
         }
     }
+    
 });
 </script>
 
 <!-- Preload de fontes para melhor performance -->
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
 
+<!-- Modal de Autenticação -->
+<div id="auth-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="modal-close" onclick="document.getElementById('auth-modal').style.display='none'">&times;</span>
+    <h2>Entrar ou Cadastrar</h2>
+    <form id="login-form">
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Senha" required>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <hr>
+    <form id="register-form">
+      <input type="text" placeholder="Nome" required>
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Senha" required>
+      <input type="tel" placeholder="Telefone">
+      <button type="submit" class="btn btn-outline">Cadastrar</button>
+    </form>
+  </div>
+</div>
+
+    <!-- Scripts -->
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/tickets.js"></script>
+    <script src="js/app.js"></script>
+    <!-- Notification Container será criado dinamicamente -->
 </body>
 </html>
